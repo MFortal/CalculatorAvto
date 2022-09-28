@@ -1,23 +1,81 @@
 @font-face {
   font-family: "Nekst-Black";
   font-weight: 900;
-  src: local("Nekst-Black"),
-       url("/fonts/Nekst-Black.woff2") format("woff2"),
-       url("/fonts/Nekst-Black.woff") format("woff"),
-       url("/fonts/Nekst-Black.eot") format("eot"),
-       url("/fonts/Nekst-Black.ttf") format("ttf");
+  src: local("Nekst-Black"), url("/fonts/Nekst-Black.woff2") format("woff2"),
+    url("/fonts/Nekst-Black.woff") format("woff"), url("/fonts/Nekst-Black.eot") format("eot"),
+    url("/fonts/Nekst-Black.ttf") format("ttf");
 }
 
 @font-face {
   font-family: "Gilroy-Regular";
   font-weight: 400;
-  src: local("Gilroy-Regular"),
-       url("/fonts/Gilroy-Regular.woff2") format("woff2"),
-       url("/fonts/Gilroy-Regular.woff") format("woff"),
-       url("/fonts/Gilroy-Regular.eot") format("eot"),
-       url("/fonts/Gilroy-Regular.ttf") format("ttf");
+  src: local("Gilroy-Regular"), url("/fonts/Gilroy-Regular.woff2") format("woff2"),
+    url("/fonts/Gilroy-Regular.woff") format("woff"), url("/fonts/Gilroy-Regular.eot") format("eot"),
+    url("/fonts/Gilroy-Regular.ttf") format("ttf");
 }
 
-body {
+:root {
+  --color-bg-white: #ffffff;
+  --color-bg-orange: #ff9514;
+  --color-bg-black: #111;
+  --color-bg-grey: #575757;
+  --color-bg-dis: rgba(255, 149, 20, 0.4);
+}
+
+.button {
   font-family: "Gilroy-Regular", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: var(--color-bg-white);
+  padding: 12px 24px;
+  gap: 10px;
+
+  background: var(--color-bg-orange);
+  border: none;
+  border-radius: 40px;
+}
+
+.button:hover {
+  background: var(--color-bg-black);
+}
+
+.button:active {
+  background: var(--color-bg-grey);
+}
+
+.button:disabled {
+  background: var(--color-bg-dis);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button_loading {
+  min-height: 48px;
+  min-width: 103px;
+}
+
+.button__img {
+  animation-name: rotation;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.container {
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  padding: 0px;
+  gap: 32px;
 }
