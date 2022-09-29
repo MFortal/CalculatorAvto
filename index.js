@@ -40,10 +40,6 @@ const setValues = (input, i) => {
 
   // Если перемещен ползунок первоначального взноса
   if (outputSymbols[i].dataset.persent) {
-    console.log('value = ' + _this.value);
-    console.log('value/100 = ' + _this.value / 100);
-    console.log('price avto =  ' + price.value);
-    console.log('total = ' + _this.value / 100 * price.value);
     outputSymbols[i].innerHTML = thousandSeparator(Math.round(_this.value / 100 * price.value));
     document.querySelector(".output__persent").innerHTML = _this.value + '%';
   } else {
