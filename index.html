@@ -3,36 +3,74 @@
 <head>
   <title>Калькулятор лизинга авто</title>
   <meta name="description" content="Думаю, что я отличная кандидатура :)" />
+  <link rel="stylesheet" href="normilize.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1 class="header-h1">Рассчитайте стоимость</h1>
-  <p class="text">Рассчитайте стоимость</h1>
+  <main class="main">
+    <h1 class="header-h1">Рассчитайте стоимость автомобиля в лизинг</h1>
     <section class="container">
-      <button class="button" type="submit">Passive</button>
-      <button class="button" type="submit">Hover</button>
-      <button class="button" type="submit">Pressed</button>
-      <button class="button" type="submit">Disabled</button>
-      <button class="button button_loading" type="submit">
-        <img class="button__img" src="img/ellipse.svg" />
-      </button>
-    </section>
-    <section class="container">
-      <div class="container-slider">
+      <!--Кнопка loading
+        <button class="button button_loading" type="submit">
+          <img class="button__img" src="img/ellipse.svg" />
+        </button> -->
+      <div class="container__elem container-slider">
+        <p class="text container-slider__text">Стоимость автомобиля</p>
         <div class="output">
-          <span class="output__symbol output__text"></span>
-          <span class="output__text">₽</span>
+          <span class="output__symbol"></span>
+          <span class="">₽</span>
         </div>
-        <input class="input-slider" type="range" id="input-right" min="0" max="1000" value="750">
+        <input class="input-slider" type="range" id="input-right" min="1000000" max="6000000" value="1750000">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
           <div class="slider__thumb"></div>
         </div>
       </div>
+
+      <div class="container__elem container-slider">
+        <p class="text container-slider__text">Первоначальный взнос</p>
+        <div class="output">
+          <span class="output__symbol"></span>
+          <span class="">₽</span>
+        </div>
+        <input class="input-slider" type="range" id="input-right" min="10" max="60" value="20">
+        <div class="slider">
+          <div class="slider__track"></div>
+          <div class="slider__range"></div>
+          <div class="slider__thumb"></div>
+        </div>
+      </div>
+
+      <div class="container__elem container-slider">
+        <p class="text container-slider__text">Срок лизинга</p>
+        <div class="output">
+          <span class="output__symbol"></span>
+          <span class="">мес.</span>
+        </div>
+        <input class="input-slider" type="range" id="input-right" min="1" max="60" value="30">
+        <div class="slider">
+          <div class="slider__track"></div>
+          <div class="slider__range"></div>
+          <div class="slider__thumb"></div>
+        </div>
+      </div>
+
+      <div class="container__elem container-output">
+        <p class="text container-output__title">Срок лизинга</p>
+        <p class="output__text">45 677 ₽</p>
+      </div>
+
+      <div class="container__elem container-output">
+        <p class="text container-output__title">Ежемесячный платеж от</p>
+        <p class="output__text">45 677 ₽</p>
+      </div>
+
+      <button class="button container__elem" type="submit">Оставить заявку</button>
     </section>
-    <script src="./index.js"></script>
+  </main>
+  <script src="./index.js"></script>
 </body>
 
 </html>

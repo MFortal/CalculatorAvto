@@ -43,32 +43,37 @@ html {
   font-family: "Nekst", "Arial", sans-serif;
 }
 
+.main {
+  margin: 113px 48px;
+}
+
 /* Стили кнопок */
 .button {
   font-family: "Gilroy", "Arial", sans-serif;
   font-weight: bold;
   font-size: 16px;
   line-height: 24px;
-
+  height: 100%;
   color: var(--color-bg-white);
-  padding: 12px 24px;
-  gap: 10px;
-
+  padding: 14px 0 18px 0;
   background: var(--color-bg-orange);
   border: none;
   border-radius: 40px;
+
+  cursor: pointer;
 }
 
-.button_hover {
+.button:hover {
   background: var(--color-bg-black);
 }
 
-.button_active {
+.button:active {
   background: var(--color-bg-grey);
 }
 
-.button_disabled {
+.button:disabled {
   background: var(--color-bg-dis);
+  cursor: none;
 }
 
 @keyframes rotation {
@@ -96,31 +101,37 @@ html {
 .container {
   margin-top: 10vh;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  padding: 0px;
-  gap: 32px;
+  gap: 44px 32px;
 }
 
 .header-h1 {
   font-size: 54px;
   line-height: 90%;
   color: var(--color-bg-black);
+  max-width: 50%;
 }
 
 .text {
   font-family: "Gilroy";
+  font-weight: normal;
   font-size: 16px;
   line-height: 20px;
   color: var(--color-bg-grey);
 }
 
+.container-output__title {
+  margin-bottom: 8px;
+}
+
+.container-slider__text {
+  margin-bottom: 24px;
+}
+
 /* Ползунок */
 .container-slider {
-  margin-top: 2%;
-
   position: relative;
-  width: 50%;
-  max-width: 500px;
 }
 
 .slider {
@@ -217,4 +228,15 @@ html {
 /* Стили active слайдера*/
 .container-slider_disabled {
   opacity: 0.4;
+}
+
+.output__text {
+  font-family: "Nekst";
+  font-size: 54px;
+  line-height: 90%;
+  color: var(--color-bg-grey);
+}
+
+.container__elem {
+  width: 31.7%;
 }
