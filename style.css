@@ -35,6 +35,8 @@
   --color-bg-black: #111;
   --color-bg-grey: #575757;
   --color-bg-dis: rgba(255, 149, 20, 0.4);
+  --color-bg-track: #e1e1e1;
+  --color-bg-output: #f3f3f4;
 }
 
 html {
@@ -110,4 +112,109 @@ html {
   font-size: 16px;
   line-height: 20px;
   color: var(--color-bg-grey);
+}
+
+/* Ползунок */
+.container-slider {
+  margin-top: 2%;
+
+  position: relative;
+  width: 50%;
+  max-width: 500px;
+}
+
+.slider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index: 1;
+  height: 2px;
+  margin: 0 24px;
+}
+.slider__track {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--color-bg-track);
+}
+.slider__range {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: var(--color-bg-orange);
+}
+.slider__thumb {
+  position: absolute;
+  z-index: 3;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-bg-orange);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.input-slider {
+  position: absolute;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+  height: 10px;
+  width: 100%;
+  opacity: 0;
+}
+
+.input-slider::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  border: 0 none;
+  background-color: var(--color-bg-output);
+  -webkit-appearance: none;
+}
+
+.output {
+  background: var(--color-bg-output);
+  border: 2px solid var(--color-bg-output);
+  box-sizing: border-box;
+  border-radius: 16px;
+  font-size: 30px;
+  line-height: 36px;
+  color: var(--color-bg-grey);
+
+  display: flex;
+  padding: 16px 24px;
+  justify-content: space-between;
+}
+
+/* Стили hover слайдера*/
+.slider__thumb_hover {
+  height: 24px;
+  width: 24px;
+}
+
+.slider__range_hover {
+  height: 1px;
+}
+
+/* Стили active слайдера*/
+.slider__range_active {
+  height: 1px;
+}
+
+.output_active {
+  background-color: var(--color-bg-white);
+  border: 2px solid var(--color-bg-output);
+}
+
+/* Стили active слайдера*/
+.container-slider_disabled {
+  opacity: 0.4;
 }
