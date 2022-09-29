@@ -1,17 +1,32 @@
 @font-face {
-  font-family: "Nekst-Black";
+  font-family: "Nekst";
+  src: url("/fonts/Nekst-Black.eot");
+  src: local("Nekst Black"), local("Nekst-Black"), url("/fonts/Nekst-Black.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Nekst-Black.woff2") format("woff2"), url("/fonts/Nekst-Black.woff") format("woff"),
+    url("/fonts/Nekst-Black.ttf") format("truetype");
   font-weight: 900;
-  src: local("Nekst-Black"), url("/fonts/Nekst-Black.woff2") format("woff2"),
-    url("/fonts/Nekst-Black.woff") format("woff"), url("/fonts/Nekst-Black.eot") format("eot"),
-    url("/fonts/Nekst-Black.ttf") format("ttf");
+  font-style: normal;
 }
 
 @font-face {
-  font-family: "Gilroy-Regular";
-  font-weight: 400;
-  src: local("Gilroy-Regular"), url("/fonts/Gilroy-Regular.woff2") format("woff2"),
-    url("/fonts/Gilroy-Regular.woff") format("woff"), url("/fonts/Gilroy-Regular.eot") format("eot"),
-    url("/fonts/Gilroy-Regular.ttf") format("ttf");
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Regular.eot");
+  src: local("Gilroy Regular"), local("Gilroy-Regular"),
+    url("/fonts/Gilroy-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Gilroy-Regular.woff2") format("woff2"), url("/fonts/Gilroy-Regular.woff") format("woff"),
+    url("/fonts/Gilroy-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Bold.eot");
+  src: local("Gilroy Bold"), local("Gilroy-Bold"), url("/fonts/Gilroy-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Gilroy-Bold.woff2") format("woff2"), url("/fonts/Gilroy-Bold.woff") format("woff"),
+    url("/fonts/Gilroy-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 :root {
@@ -22,10 +37,14 @@
   --color-bg-dis: rgba(255, 149, 20, 0.4);
 }
 
+html {
+  font-family: "Nekst", "Arial", sans-serif;
+}
+
+/* Стили кнопок */
 .button {
-  font-family: "Gilroy-Regular", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 700;
+  font-family: "Gilroy", "Arial", sans-serif;
+  font-weight: bold;
   font-size: 16px;
   line-height: 24px;
 
@@ -38,15 +57,15 @@
   border-radius: 40px;
 }
 
-.button:hover {
+.button_hover {
   background: var(--color-bg-black);
 }
 
-.button:active {
+.button_active {
   background: var(--color-bg-grey);
 }
 
-.button:disabled {
+.button_disabled {
   background: var(--color-bg-dis);
 }
 
@@ -78,4 +97,17 @@
   justify-content: center;
   padding: 0px;
   gap: 32px;
+}
+
+.header-h1 {
+  font-size: 54px;
+  line-height: 90%;
+  color: var(--color-bg-black);
+}
+
+.text {
+  font-family: "Gilroy";
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-bg-grey);
 }
