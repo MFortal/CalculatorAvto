@@ -205,6 +205,17 @@ html {
   justify-content: space-between;
 }
 
+.output__text {
+  font-family: "Nekst";
+  font-size: 54px;
+  line-height: 90%;
+  color: var(--color-bg-grey);
+}
+
+.output__persent {
+  font-size: 20px;
+}
+
 /* Стили hover слайдера*/
 .slider__thumb_hover {
   height: 24px;
@@ -228,13 +239,6 @@ html {
 /* Стили active слайдера*/
 .container-slider_disabled {
   opacity: 0.4;
-}
-
-.output__text {
-  font-family: "Nekst";
-  font-size: 54px;
-  line-height: 90%;
-  color: var(--color-bg-grey);
 }
 
 .container__elem {

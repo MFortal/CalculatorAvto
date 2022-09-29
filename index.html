@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 
 <head>
   <title>Калькулятор лизинга авто</title>
@@ -21,7 +21,7 @@
           <span class="output__symbol"></span>
           <span class="">₽</span>
         </div>
-        <input class="input-slider" type="range" id="input-right" min="1000000" max="6000000" value="1750000">
+        <input class="input-slider input-priceAvto" type="range" min="1000000" max="6000000" value="3300000">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -32,10 +32,10 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Первоначальный взнос</p>
         <div class="output">
-          <span class="output__symbol"></span>
-          <span class="">₽</span>
+          <span class="output__symbol" data-persent="true"></span>
+          <span class="output__persent"></span>
         </div>
-        <input class="input-slider" type="range" id="input-right" min="10" max="60" value="20">
+        <input class="input-slider" type="range" min="10" max="60" value="13">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -49,7 +49,7 @@
           <span class="output__symbol"></span>
           <span class="">мес.</span>
         </div>
-        <input class="input-slider" type="range" id="input-right" min="1" max="60" value="30">
+        <input class="input-slider" type="range" min="1" max="60" value="60">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -58,13 +58,13 @@
       </div>
 
       <div class="container__elem container-output">
-        <p class="text container-output__title">Срок лизинга</p>
-        <p class="output__text">45 677 ₽</p>
+        <p class="text container-output__title">Сумма договора лизинга</p>
+        <p class="output__text output__leasingAmount"></p>
       </div>
 
       <div class="container__elem container-output">
         <p class="text container-output__title">Ежемесячный платеж от</p>
-        <p class="output__text">45 677 ₽</p>
+        <p class="output__text output__monthPay"></p>
       </div>
 
       <button class="button container__elem" type="submit">Оставить заявку</button>
