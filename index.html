@@ -18,10 +18,10 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Стоимость автомобиля</p>
         <div class="output">
-          <span class="output__symbol"></span>
+          <span class="output__symbol" id="price-avto-output"></span>
           <span class="">₽</span>
         </div>
-        <input class="input-slider input-priceAvto" type="range" min="1000000" max="6000000" value="3300000">
+        <input class="input-slider" id="price-avto" type="range" min="1000000" max="6000000" value="3300000">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -32,10 +32,10 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Первоначальный взнос</p>
         <div class="output">
-          <span class="output__symbol" data-persent="true"></span>
+          <span class="output__symbol" id="initial-payment-output" data-persent="true"></span>
           <span class="output__persent"></span>
         </div>
-        <input class="input-slider" type="range" min="10" max="60" value="13">
+        <input class="input-slider" id="initial-payment" type="range" min="10" max="60" value="13">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -46,10 +46,10 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Срок лизинга</p>
         <div class="output">
-          <span class="output__symbol"></span>
+          <span class="output__symbol" id="leasing-period-output"></span>
           <span class="">мес.</span>
         </div>
-        <input class="input-slider" type="range" min="1" max="60" value="60">
+        <input class="input-slider" id="leasing-period" type="range" min="1" max="60" value="60">
         <div class="slider">
           <div class="slider__track"></div>
           <div class="slider__range"></div>
@@ -59,12 +59,12 @@
 
       <div class="container__elem container-output">
         <p class="text container-output__title">Сумма договора лизинга</p>
-        <p class="output__text output__leasingAmount"></p>
+        <p class="output__text" id="leasingAmount"></p>
       </div>
 
       <div class="container__elem container-output">
         <p class="text container-output__title">Ежемесячный платеж от</p>
-        <p class="output__text output__monthPay"></p>
+        <p class="output__text" id="monthPay"></p>
       </div>
 
       <button class="button container__elem" type="submit">Оставить заявку</button>

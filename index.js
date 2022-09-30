@@ -1,12 +1,11 @@
-const inputs = Array.from(document.querySelectorAll(".input-slider")),
-  thumbs = Array.from(document.querySelectorAll(".slider__thumb")),
-  ranges = Array.from(document.querySelectorAll(".slider__range")),
-  outputSymbols = Array.from(document.querySelectorAll(".output__symbol")),
-  outputs = Array.from(document.querySelectorAll(".output")),
-  sliders = Array.from(document.querySelectorAll(".container-slider")),
-  price = document.querySelector(".input-priceAvto"),
-  leasingAmount = document.querySelector(".output__leasingAmount"),
-  monthPay = document.querySelector(".output__monthPay");
+const priceAvtoInput = document.getElementById("price-avto"),
+  initialPaymentInput = document.getElementById("initial-payment"),
+  leasingPeriodInput = document.getElementById("leasing-period"),
+  priceAvtoOutputSym = document.getElementById("price-avto-output"),
+  initialPaymentOutputSym = document.getElementById("initial-payment-output"),
+  leasingPeriodOutputSym = document.getElementById("leasing-period-output"),
+  leasingAmount = document.getElementById("leasingAmount"),
+  monthPay = document.getElementById("monthPay");
 
 /*Разделение числа и добавление пробела*/
 const thousandSeparator = (str) => {
@@ -31,7 +30,7 @@ const thousandSeparator = (str) => {
 };
 
 /* Установление значений в ползунок */
-const setValues = (input, i) => {
+const setValues = (input, output) => {
   var _this = input,
     min = parseInt(_this.min),
     max = parseInt(_this.max);
@@ -39,66 +38,81 @@ const setValues = (input, i) => {
   var percent = ((_this.value - min) / (max - min)) * 100;
 
   // Если перемещен ползунок первоначального взноса
-  if (outputSymbols[i].dataset.persent) {
-    outputSymbols[i].innerHTML = thousandSeparator(Math.round(_this.value / 100 * price.value));
+  if (output.dataset.persent) {
+    output.innerHTML = thousandSeparator(Math.round(_this.value / 100 * priceAvtoInput.value));
     document.querySelector(".output__persent").innerHTML = _this.value + '%';
   } else {
-    outputSymbols[i].innerHTML = thousandSeparator(Math.round(_this.value));
+    output.innerHTML = thousandSeparator(Math.round(_this.value));
   }
 
   // Перемещение ползунка
-  thumbs[i].style.right = (100 - percent) + "%";
-  ranges[i].style.right = (100 - percent) + "%";
+  _this.nextElementSibling.querySelector(".slider__thumb").style.right = (100 - percent) + "%";
+  _this.nextElementSibling.querySelector(".slider__range").style.right = (100 - percent) + "%";
 
   calculation();
 }
 
-/* Подсчет значений */
 const calculation = () => {
   /* Ежемесячный платеж 
-  (Стоимость автомобиля inputs[0] - Первоначальный взнос) * ((Процентная ставка * (1 + Процентная ставка) ^ Срок кредита в месяцах) / ((1 + Процентная ставка) ^ Срок кредита в месяцах - 1))
+  (Стоимость автомобиля  - Первоначальный взнос) * ((Процентная ставка * (1 + Процентная ставка) ^ Срок кредита в месяцах) / ((1 + Процентная ставка) ^ Срок кредита в месяцах - 1))
   const monthPay = (price - initial) * ((0.035 * Math.pow((1 + 0.035), months)) / (Math.pow((1 + 0.035), months) - 1));
   */
-  const mPay = Math.round((inputs[0].value - inputs[1].value) * ((0.035) * Math.pow((1 + 0.035), inputs[2].value)) / (Math.pow((1 + 0.035), inputs[2].value) - 1));
+  const mPay = Math.round((priceAvtoInput.value - initialPaymentInput.value) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
   monthPay.innerHTML = thousandSeparator(mPay) + ' ₽';
 
   /* Сумма договора лизинга
+  Первоначальный взнос(в процентах) * Стоимость автомобиля = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value)
   Первоначальный взнос + Срок кредита в месяцах * Ежемесячный платеж
   */
-  leasingAmount.innerHTML = thousandSeparator(Math.round((inputs[1].value / 100 * price.value) + mPay * inputs[2].value)) + ' ₽';
+  leasingAmount.innerHTML = thousandSeparator(Math.round((initialPaymentInput.value / 100 * priceAvtoInput.value) + mPay * leasingPeriodInput.value)) + ' ₽';
 }
 
-inputs.forEach((item, i) => {
-  setValues(item, i);
+const addEventInput = (item, output) => {
+  setValues(item, output);
   item.addEventListener("input", () => {
-    setValues(item, i);
+    setValues(item, output);
   });
-})
 
-inputs.forEach((item, i) => {
+  const thumb = item.nextElementSibling.querySelector(".slider__thumb");
+  const range = item.nextElementSibling.querySelector(".slider__range");
+
   item.addEventListener("mouseover", function () {
-    thumbs[i].classList.add("slider__thumb_hover");
-    ranges[i].classList.add("slider__range_hover");
+    thumb.classList.add("slider__thumb_hover");
+    range.classList.add("slider__range_hover");
 
     /* Состояние Active */
-    ranges[i].classList.add("slider__range_active");
-    outputs[i].classList.add("output_active");
+    range.classList.add("slider__range_active");
+    output.parentNode.classList.add("output_active");
   });
 
   item.addEventListener("mouseout", function () {
-    thumbs[i].classList.remove("slider__thumb_hover");
-    ranges[i].classList.remove("slider__range_hover");
+    thumb.classList.remove("slider__thumb_hover");
+    range.classList.remove("slider__range_hover");
 
     /* Состояние Active */
-    ranges[i].classList.remove("slider__range_active");
-    outputs[i].classList.remove("output_active");
+    range.classList.remove("slider__range_active");
+    output.parentNode.classList.remove("output_active");
   });
-})
+}
 
 /* Состояние disabled, если data-disabled=true */
-sliders.forEach((item, i) => {
-  if (item.dataset.disabled) {
-    item.classList.add("container-slider_disabled");
-    inputs[i].disabled = "true";
+const setSliderDisabled = (item) => {
+  const slider = item.nextElementSibling;
+  const sliderContainer = item.parentElement;
+  if (slider.dataset.disabled) {
+    sliderContainer.classList.add("container-slider_disabled");
+    item.disabled = "true";
   }
-})
+}
+
+setValues(priceAvtoInput, priceAvtoOutputSym);
+setValues(initialPaymentInput, initialPaymentOutputSym);
+setValues(leasingPeriodInput, leasingPeriodOutputSym);
+
+addEventInput(priceAvtoInput, priceAvtoOutputSym);
+addEventInput(initialPaymentInput, initialPaymentOutputSym);
+addEventInput(leasingPeriodInput, leasingPeriodOutputSym);
+
+setSliderDisabled(priceAvtoInput);
+setSliderDisabled(initialPaymentInput);
+setSliderDisabled(leasingPeriodInput);
