@@ -18,8 +18,9 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Стоимость автомобиля</p>
         <div class="output">
-          <span class="output__symbol" id="price-avto-output"></span>
-          <span class="">₽</span>
+          <!-- <span class="output__value" id="price-avto-output"></span> -->
+          <input class="output__value" id="price-avto-output" />
+          <span class="output__symbol">₽</span>
         </div>
         <input class="input-slider" id="price-avto" type="range" min="1000000" max="6000000" value="3300000">
         <div class="slider">
@@ -32,8 +33,8 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Первоначальный взнос</p>
         <div class="output">
-          <span class="output__symbol" id="initial-payment-output" data-persent="true"></span>
-          <span class="output__persent"></span>
+          <input class="output__value" id="initial-payment-output" data-persent="true" />
+          <span class="output__symbol output__persent"></span>
         </div>
         <input class="input-slider" id="initial-payment" type="range" min="10" max="60" value="13">
         <div class="slider">
@@ -46,8 +47,8 @@
       <div class="container__elem container-slider">
         <p class="text container-slider__text">Срок лизинга</p>
         <div class="output">
-          <span class="output__symbol" id="leasing-period-output"></span>
-          <span class="">мес.</span>
+          <input class="output__value" id="leasing-period-output" />
+          <span class="output__symbol">мес.</span>
         </div>
         <input class="input-slider" id="leasing-period" type="range" min="1" max="60" value="60">
         <div class="slider">

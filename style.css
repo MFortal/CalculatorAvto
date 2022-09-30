@@ -244,3 +244,10 @@ html {
 .container__elem {
   width: 31.7%;
 }
+
+.output__value {
+  width: 90%;
+  background: transparent;
+  border: none;
+  outline: 0;
+}

@@ -1,11 +1,16 @@
 const priceAvtoInput = document.getElementById("price-avto"),
   initialPaymentInput = document.getElementById("initial-payment"),
   leasingPeriodInput = document.getElementById("leasing-period"),
-  priceAvtoOutputSym = document.getElementById("price-avto-output"),
-  initialPaymentOutputSym = document.getElementById("initial-payment-output"),
-  leasingPeriodOutputSym = document.getElementById("leasing-period-output"),
+  priceAvtoOutput = document.getElementById("price-avto-output"),
+  initialPaymentOutput = document.getElementById("initial-payment-output"),
+  leasingPeriodOutput = document.getElementById("leasing-period-output"),
   leasingAmount = document.getElementById("leasingAmount"),
   monthPay = document.getElementById("monthPay");
+
+let _this,
+  min,
+  max,
+  percent;
 
 /*Разделение числа и добавление пробела*/
 const thousandSeparator = (str) => {
@@ -31,23 +36,28 @@ const thousandSeparator = (str) => {
 
 /* Установление значений в ползунок */
 const setValues = (input, output) => {
-  var _this = input,
+
+  _this = input,
     min = parseInt(_this.min),
     max = parseInt(_this.max);
   _this.value = parseInt(_this.value);
-  var percent = ((_this.value - min) / (max - min)) * 100;
+  percent = ((_this.value - min) / (max - min)) * 100;
 
   // Если перемещен ползунок первоначального взноса
   if (output.dataset.persent) {
-    output.innerHTML = thousandSeparator(Math.round(_this.value / 100 * priceAvtoInput.value));
+    output.value = thousandSeparator(Math.round(_this.value / 100 * priceAvtoInput.value));
     document.querySelector(".output__persent").innerHTML = _this.value + '%';
   } else {
-    output.innerHTML = thousandSeparator(Math.round(_this.value));
+    output.value = thousandSeparator(Math.round(_this.value));
   }
 
+  moveSlider(_this, percent);
+}
+
+const moveSlider = (item, percent) => {
   // Перемещение ползунка
-  _this.nextElementSibling.querySelector(".slider__thumb").style.right = (100 - percent) + "%";
-  _this.nextElementSibling.querySelector(".slider__range").style.right = (100 - percent) + "%";
+  item.nextElementSibling.querySelector(".slider__thumb").style.right = (100 - percent) + "%";
+  item.nextElementSibling.querySelector(".slider__range").style.right = (100 - percent) + "%";
 
   calculation();
 }
@@ -89,6 +99,15 @@ const addEventInput = (item, output) => {
     output.parentNode.classList.add("output_active");
   });
 
+  output.addEventListener("click", function () {
+    thumb.classList.add("slider__thumb_hover");
+    range.classList.add("slider__range_hover");
+
+    /* Состояние Active */
+    range.classList.add("slider__range_active");
+    output.parentNode.classList.add("output_active");
+  });
+
   item.addEventListener("mouseout", function () {
     thumb.classList.remove("slider__thumb_hover");
     range.classList.remove("slider__range_hover");
@@ -97,6 +116,7 @@ const addEventInput = (item, output) => {
     range.classList.remove("slider__range_active");
     output.parentNode.classList.remove("output_active");
   });
+
 }
 
 /* Состояние disabled для ползунка, если data-disabled=true у .slider */
@@ -109,14 +129,102 @@ const setSliderDisabled = (item) => {
   }
 }
 
-setValues(priceAvtoInput, priceAvtoOutputSym);
-setValues(initialPaymentInput, initialPaymentOutputSym);
-setValues(leasingPeriodInput, leasingPeriodOutputSym);
 
-addEventInput(priceAvtoInput, priceAvtoOutputSym);
-addEventInput(initialPaymentInput, initialPaymentOutputSym);
-addEventInput(leasingPeriodInput, leasingPeriodOutputSym);
+/* Если ткнули клавишей вне ввода */
+document.onclick = function (e) {
+  if (!e.target.classList.contains("output__value")) {
+
+    const items = document.querySelectorAll('.input-slider');
+    const outputs = document.querySelectorAll('.output__value');
+
+    for (item of items) {
+      item.nextElementSibling.querySelector(".slider__thumb").classList.remove("slider__thumb_hover");
+      item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_hover");
+
+      /* Состояние Active */
+      item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_active");
+    }
+    for (output of outputs) {
+      output.parentNode.classList.remove("output_active");
+    }
+  };
+};
+
+/* Невозможность ввода букв в инпут */
+const setAddEventOutput = (input, output) => {
+
+  output.addEventListener("keyup", () => {
+    let current = output.value.replace(/[^\d]/g, "");
+
+    output.value = current;
+    _this = input,
+      min = parseInt(_this.min),
+      max = parseInt(_this.max),
+      percent = ((parseInt(output.value) - min) / (max - min)) * 100;
+
+    if (percent > 100) {
+      percent = 100;
+      input.value = max;
+    } else if (percent < 0) {
+      percent = 0;
+      input.value = min;
+    } else {
+      input.value = output.value;
+    }
+
+    moveSlider(input, percent);
+  });
+
+  output.addEventListener('keypress', function (e) {
+    let currentValue = output.value;
+    _this = input,
+      min = parseInt(_this.min),
+      max = parseInt(_this.max);
+
+    if (e.key === 'Enter') {
+      // if (output.value > max) {
+      //   if (output.dataset.persent) {
+      //     currentValue = Math.round(max / 100 * priceAvtoInput.value);
+      //     console.log('много в процентах');
+      //   } else {
+      //     currentValue = max;
+      //     console.log('много');
+      //   }
+      // } else if (output.value < min) {
+      //   if (output.dataset.persent) {
+      //     currentValue = Math.round(min / 100 * priceAvtoInput.value);
+      //   } else {
+      //     currentValue = min;
+      //   }
+      if (output.value > max) {
+        if (output.dataset.persent) {
+          currentValue = Math.round(max / 100 * priceAvtoInput.value);
+        } else
+          currentValue = max;
+      } else if (output.value < min) {
+        if (output.dataset.persent) {
+          currentValue = Math.round(min / 100 * priceAvtoInput.value);
+        } else {
+          currentValue = min;
+        }
+      }
+      output.value = thousandSeparator(currentValue);
+    }
+  });
+}
+
+setValues(priceAvtoInput, priceAvtoOutput);
+setValues(initialPaymentInput, initialPaymentOutput);
+setValues(leasingPeriodInput, leasingPeriodOutput);
+
+addEventInput(priceAvtoInput, priceAvtoOutput);
+addEventInput(initialPaymentInput, initialPaymentOutput);
+addEventInput(leasingPeriodInput, leasingPeriodOutput);
 
 setSliderDisabled(priceAvtoInput);
 setSliderDisabled(initialPaymentInput);
 setSliderDisabled(leasingPeriodInput);
+
+setAddEventOutput(priceAvtoInput, priceAvtoOutput);
+setAddEventOutput(initialPaymentInput, initialPaymentOutput);
+setAddEventOutput(leasingPeriodInput, leasingPeriodOutput);
