@@ -52,21 +52,25 @@ const setValues = (input, output) => {
   calculation();
 }
 
+/* Подчсет значений */
 const calculation = () => {
+  //  ПЗ = Первоначальный взнос(в процентах) * Стоимость автомобиля = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value)
+  const initial = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value);
+
   /* Ежемесячный платеж 
   (Стоимость автомобиля  - Первоначальный взнос) * ((Процентная ставка * (1 + Процентная ставка) ^ Срок кредита в месяцах) / ((1 + Процентная ставка) ^ Срок кредита в месяцах - 1))
   const monthPay = (price - initial) * ((0.035 * Math.pow((1 + 0.035), months)) / (Math.pow((1 + 0.035), months) - 1));
   */
-  const mPay = Math.round((priceAvtoInput.value - initialPaymentInput.value) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
-  monthPay.innerHTML = thousandSeparator(mPay) + ' ₽';
+  const mPay = Math.round((priceAvtoInput.value - initial) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
 
+  monthPay.innerHTML = thousandSeparator(mPay) + ' ₽';
   /* Сумма договора лизинга
-  Первоначальный взнос(в процентах) * Стоимость автомобиля = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value)
   Первоначальный взнос + Срок кредита в месяцах * Ежемесячный платеж
   */
-  leasingAmount.innerHTML = thousandSeparator(Math.round((initialPaymentInput.value / 100 * priceAvtoInput.value) + mPay * leasingPeriodInput.value)) + ' ₽';
+  leasingAmount.innerHTML = thousandSeparator(Math.round(initial + mPay * leasingPeriodInput.value)) + ' ₽';
 }
 
+/* Установка событий в input */
 const addEventInput = (item, output) => {
   setValues(item, output);
   item.addEventListener("input", () => {
@@ -95,7 +99,7 @@ const addEventInput = (item, output) => {
   });
 }
 
-/* Состояние disabled, если data-disabled=true */
+/* Состояние disabled для ползунка, если data-disabled=true у .slider */
 const setSliderDisabled = (item) => {
   const slider = item.nextElementSibling;
   const sliderContainer = item.parentElement;
