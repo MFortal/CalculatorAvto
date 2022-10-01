@@ -159,10 +159,8 @@ document.onclick = function (e) {
 const setAddEventOutput = (input, output) => {
 
   output.addEventListener("keyup", () => {
-    output.value = output.value.replace(/[^\d]/g, "").replace(/\d{3}(?!$|(?:\s$))/g, "$& ");
-    let current = output.value;
+    let current = output.value.replace(/[^\d]/g, "");
 
-    output.value = current;
     let _this = input,
       min = parseInt(_this.min),
       max = parseInt(_this.max);
@@ -171,7 +169,7 @@ const setAddEventOutput = (input, output) => {
       min *= priceAvtoInput.value;
       max *= priceAvtoInput.value;
     }
-    let percent = ((parseInt(output.value) - min) / (max - min)) * 100;
+    let percent = ((parseInt(current) - min) / (max - min)) * 100;
 
     if (percent > 100) {
       percent = 100;
@@ -182,6 +180,8 @@ const setAddEventOutput = (input, output) => {
     } else {
       input.value = output.value;
     }
+
+    output.value = new Intl.NumberFormat('ru-RU').format(current);
 
     moveSlider(input, percent);
   });
