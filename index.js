@@ -130,23 +130,28 @@ const setSliderDisabled = (item) => {
   }
 }
 
+/*  */
+const deleteClass = () => {
+  const items = document.querySelectorAll('.input-slider');
+  const outputs = document.querySelectorAll('.output__value');
+
+  for (item of items) {
+    item.nextElementSibling.querySelector(".slider__thumb").classList.remove("slider__thumb_hover");
+    item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_hover");
+
+    /* Состояние Active */
+    item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_active");
+  }
+  for (output of outputs) {
+    output.parentNode.classList.remove("output_active");
+  }
+}
+
 /* Если ткнули клавишей вне ввода */
 document.onclick = function (e) {
   if (!e.target.classList.contains("output__value")) {
+    deleteClass();
 
-    const items = document.querySelectorAll('.input-slider');
-    const outputs = document.querySelectorAll('.output__value');
-
-    for (item of items) {
-      item.nextElementSibling.querySelector(".slider__thumb").classList.remove("slider__thumb_hover");
-      item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_hover");
-
-      /* Состояние Active */
-      item.nextElementSibling.querySelector(".slider__range").classList.remove("slider__range_active");
-    }
-    for (output of outputs) {
-      output.parentNode.classList.remove("output_active");
-    }
   };
 };
 
@@ -178,8 +183,6 @@ const setAddEventOutput = (input, output) => {
       input.value = output.value;
     }
 
-
-
     moveSlider(input, percent);
   });
 
@@ -190,20 +193,11 @@ const setAddEventOutput = (input, output) => {
       max = parseInt(_this.max);
 
     if (e.key === 'Enter') {
-      // if (output.value > max) {
-      //   if (output.dataset.persent) {
-      //     currentValue = Math.round(max / 100 * priceAvtoInput.value);
-      //     console.log('много в процентах');
-      //   } else {
-      //     currentValue = max;
-      //     console.log('много');
-      //   }
-      // } else if (output.value < min) {
-      //   if (output.dataset.persent) {
-      //     currentValue = Math.round(min / 100 * priceAvtoInput.value);
-      //   } else {
-      //     currentValue = min;
-      //   }
+      console.log(output);
+      deleteClass();
+      e.preventDefault();
+      e.target.blur();
+
       if (output.value > max) {
         if (output.dataset.persent) {
           currentValue = Math.round(max / 100 * priceAvtoInput.value);
@@ -216,9 +210,9 @@ const setAddEventOutput = (input, output) => {
           currentValue = min;
         }
       }
-      output.value = thousandSeparator(currentValue);
+      //output.value = thousandSeparator(currentValue);
     }
-  });
+  })
 }
 
 // Отправка JSON на сервер
