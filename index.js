@@ -154,7 +154,8 @@ document.onclick = function (e) {
 const setAddEventOutput = (input, output) => {
 
   output.addEventListener("keyup", () => {
-    let current = output.value.replace(/[^\d]/g, "");
+    output.value = output.value.replace(/[^\d]/g, "").replace(/\d{3}(?!$|(?:\s$))/g, "$& ");
+    let current = output.value;
 
     output.value = current;
     let _this = input,
@@ -177,12 +178,9 @@ const setAddEventOutput = (input, output) => {
       input.value = output.value;
     }
 
-    // if (input.contains("#price-avto")) {
-    //   console.log('dd');
-    // }
-    // если это тачка то посчитать ПВ
+
+
     moveSlider(input, percent);
-    //setValues(input, output);
   });
 
   output.addEventListener('keypress', function (e) {
