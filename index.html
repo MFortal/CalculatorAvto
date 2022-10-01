@@ -56,12 +56,18 @@
 
       <div class="container__elem container-output">
         <p class="text container-output__title">Сумма договора лизинга</p>
-        <p class="output__text" id="leasingAmount"></p>
+        <div class="container-output__amount">
+          <p class="output__text" id="leasingAmount"></p>
+          <span class="container-output__amount_symbol output__text">₽</span>
+        </div>
       </div>
 
       <div class="container__elem container-output">
         <p class="text container-output__title">Ежемесячный платеж от</p>
-        <p class="output__text" id="monthPay"></p>
+        <div class="container-output__amount">
+          <p class="output__text" id="monthPay"></p>
+          <span class="container-output__amount_symbol output__text">₽</span>
+        </div>
       </div>
 
       <button class="button container__elem" type="submit" id="button">Оставить заявку</button>

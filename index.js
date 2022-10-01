@@ -73,12 +73,12 @@ const calculation = () => {
   */
   mPay = Math.round((priceAvtoInput.value - initial) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
 
-  monthPay.innerHTML = thousandSeparator(mPay) + ' ₽';
+  monthPay.innerHTML = thousandSeparator(mPay);
   /* Сумма договора лизинга
   Первоначальный взнос + Срок кредита в месяцах * Ежемесячный платеж
   */
   leasingSum = Math.round(initial + mPay * leasingPeriodInput.value)
-  leasingAmount.innerHTML = thousandSeparator(leasingSum) + ' ₽';
+  leasingAmount.innerHTML = thousandSeparator(leasingSum);
 }
 
 /* Установка событий в input при наборе текста*/
