@@ -12,28 +12,6 @@ let mPay,
   initial,
   leasingSum;
 
-/*Разделение числа и добавление пробела*/
-const thousandSeparator = (str) => {
-  var parts = (str + '').split('.'),
-    main = parts[0],
-    len = main.length,
-    output = '',
-    i = len - 1;
-
-  while (i >= 0) {
-    output = main.charAt(i) + output;
-    if ((len - i) % 3 === 0 && i > 0) {
-      output = ' ' + output;
-    }
-    --i;
-  }
-
-  if (parts.length > 1) {
-    output += '.' + parts[1];
-  }
-  return output;
-};
-
 /* Установление значений в ползунок */
 const setValues = (input, output) => {
 
@@ -45,10 +23,10 @@ const setValues = (input, output) => {
 
   // Если перемещен ползунок первоначального взноса
   if (output.dataset.persent) {
-    output.value = thousandSeparator(Math.round(_this.value / 100 * priceAvtoInput.value));
+    output.value = format(Math.round(_this.value / 100 * priceAvtoInput.value));
     document.querySelector(".output__persent").innerHTML = _this.value + '%';
   } else {
-    output.value = thousandSeparator(Math.round(_this.value));
+    output.value = format(Math.round(_this.value));
   }
 
   moveSlider(_this, percent);
@@ -73,12 +51,12 @@ const calculation = () => {
   */
   mPay = Math.round((priceAvtoInput.value - initial) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
 
-  monthPay.innerHTML = thousandSeparator(mPay);
+  monthPay.innerHTML = format(mPay);
   /* Сумма договора лизинга
   Первоначальный взнос + Срок кредита в месяцах * Ежемесячный платеж
   */
-  leasingSum = Math.round(initial + mPay * leasingPeriodInput.value)
-  leasingAmount.innerHTML = thousandSeparator(leasingSum);
+  leasingSum = Math.round(initial + mPay * leasingPeriodInput.value);
+  leasingAmount.innerHTML = format(leasingSum);
 }
 
 /* Установка событий в input при наборе текста*/
@@ -151,24 +129,49 @@ const deleteClass = () => {
 document.onclick = function (e) {
   if (!e.target.classList.contains("output__value")) {
     deleteClass();
-
   };
 };
 
+/* Формат числа */
+const format = (value) => {
+  return new Intl.NumberFormat('ru-RU').format(value);
+}
+
 /* Невозможность ввода букв в инпут */
 const setAddEventOutput = (input, output) => {
+  output.addEventListener("keyup", (e) => {
 
-  output.addEventListener("keyup", () => {
+    const setSliderInitial = () => {
+      if (current > max) {
+        current = max;
+        output.value = format(max);
+      } else if (current < min) {
+        output.value = format(min);
+        current = min;
+      }
+
+      if (output.dataset.persent) {
+        let per = Math.round(current / priceAvtoInput.value * 100);
+        document.querySelector(".output__persent").innerHTML = per + '%';
+        // тут нужно подвинуть ползунок на определенное количество процентов
+        //moveSlider(initialPaymentInput, 80);
+      }
+    }
+
     let current = output.value.replace(/[^\d]/g, "");
 
     let _this = input,
       min = parseInt(_this.min),
       max = parseInt(_this.max);
 
+    input.value = output.value;
+
     if (output.dataset.persent) {
-      min *= priceAvtoInput.value;
-      max *= priceAvtoInput.value;
+      min *= priceAvtoInput.value / 100;
+      max *= priceAvtoInput.value / 100;
+      input.value = Math.round(current / priceAvtoInput.value);
     }
+
     let percent = ((parseInt(current) - min) / (max - min)) * 100;
 
     if (percent > 100) {
@@ -177,42 +180,23 @@ const setAddEventOutput = (input, output) => {
     } else if (percent < 0) {
       percent = 0;
       input.value = min;
-    } else {
-      input.value = output.value;
     }
 
-    output.value = new Intl.NumberFormat('ru-RU').format(current);
+    output.value = format(current);
 
+    if (output.dataset.persent) {
+      document.querySelector(".output__persent").innerHTML = input.value + '%';
+    }
     moveSlider(input, percent);
-  });
 
-  output.addEventListener('keypress', function (e) {
-    let currentValue = output.value;
-    _this = input,
-      min = parseInt(_this.min),
-      max = parseInt(_this.max);
-
+    /* Если нажата enter */
     if (e.key === 'Enter') {
-      console.log(output);
       deleteClass();
       e.preventDefault();
       e.target.blur();
-
-      if (output.value > max) {
-        if (output.dataset.persent) {
-          currentValue = Math.round(max / 100 * priceAvtoInput.value);
-        } else
-          currentValue = max;
-      } else if (output.value < min) {
-        if (output.dataset.persent) {
-          currentValue = Math.round(min / 100 * priceAvtoInput.value);
-        } else {
-          currentValue = min;
-        }
-      }
-      //output.value = thousandSeparator(currentValue);
+      setSliderInitial();
     }
-  })
+  });
 }
 
 // Отправка JSON на сервер
