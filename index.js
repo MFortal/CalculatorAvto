@@ -5,12 +5,12 @@ const priceAvtoInput = document.getElementById("price-avto"),
   initialPaymentOutput = document.getElementById("initial-payment-output"),
   leasingPeriodOutput = document.getElementById("leasing-period-output"),
   leasingAmount = document.getElementById("leasingAmount"),
-  monthPay = document.getElementById("monthPay");
+  monthPay = document.getElementById("monthPay"),
+  button = document.getElementById("button");
 
-let _this,
-  min,
-  max,
-  percent;
+let mPay,
+  initial,
+  leasingSum;
 
 /*Разделение числа и добавление пробела*/
 const thousandSeparator = (str) => {
@@ -37,7 +37,7 @@ const thousandSeparator = (str) => {
 /* Установление значений в ползунок */
 const setValues = (input, output) => {
 
-  _this = input,
+  let _this = input,
     min = parseInt(_this.min),
     max = parseInt(_this.max);
   _this.value = parseInt(_this.value);
@@ -65,19 +65,20 @@ const moveSlider = (item, percent) => {
 /* Подчсет значений */
 const calculation = () => {
   //  ПЗ = Первоначальный взнос(в процентах) * Стоимость автомобиля = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value)
-  const initial = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value);
+  initial = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value);
 
   /* Ежемесячный платеж 
   (Стоимость автомобиля  - Первоначальный взнос) * ((Процентная ставка * (1 + Процентная ставка) ^ Срок кредита в месяцах) / ((1 + Процентная ставка) ^ Срок кредита в месяцах - 1))
   const monthPay = (price - initial) * ((0.035 * Math.pow((1 + 0.035), months)) / (Math.pow((1 + 0.035), months) - 1));
   */
-  const mPay = Math.round((priceAvtoInput.value - initial) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
+  mPay = Math.round((priceAvtoInput.value - initial) * ((0.035) * Math.pow((1 + 0.035), leasingPeriodInput.value)) / (Math.pow((1 + 0.035), leasingPeriodInput.value) - 1));
 
   monthPay.innerHTML = thousandSeparator(mPay) + ' ₽';
   /* Сумма договора лизинга
   Первоначальный взнос + Срок кредита в месяцах * Ежемесячный платеж
   */
-  leasingAmount.innerHTML = thousandSeparator(Math.round(initial + mPay * leasingPeriodInput.value)) + ' ₽';
+  leasingSum = Math.round(initial + mPay * leasingPeriodInput.value)
+  leasingAmount.innerHTML = thousandSeparator(leasingSum) + ' ₽';
 }
 
 /* Установка событий в input */
@@ -157,7 +158,7 @@ const setAddEventOutput = (input, output) => {
     let current = output.value.replace(/[^\d]/g, "");
 
     output.value = current;
-    _this = input,
+    let _this = input,
       min = parseInt(_this.min),
       max = parseInt(_this.max),
       percent = ((parseInt(output.value) - min) / (max - min)) * 100;
@@ -212,6 +213,52 @@ const setAddEventOutput = (input, output) => {
     }
   });
 }
+
+// Отправка JSON на сервер
+const sendJSON = () => {
+  // Экземпляр запроса XHR
+  let xhr = new XMLHttpRequest();
+  let url = "https://eoj3r7f3r4ef6v4.m.pipedream.net";
+  // Открытие соединения
+  xhr.open("POST", url, true);
+  // Заголовок
+  xhr.setRequestHeader("Content-Type", "application/json");
+  // Обработка ответа от сервера
+  xhr.onreadystatechange = function () {
+    // Если запрос принят и сервер ответил, что всё в порядке
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      console.log(this.responseText);
+    }
+  };
+  // Преобразование данных в JSON
+  var data = JSON.stringify({
+    "priceAvto": priceAvtoInput.value, //Cтоимость авто
+    "initial": initial, //Первоначальный взнос
+    "initialPercent": initialPaymentInput.value, //%
+    "leasingPeriod": leasingPeriodInput.value, //Месяцы
+    "monthPay": mPay, //Ежемесячный платеж
+    "leasingSum": leasingSum //Сумма договора
+  });
+
+  // Отправка JSON на сервер
+  xhr.send(data);
+}
+
+button.addEventListener("click", () => {
+  sendJSON();
+  const value = button.innerHTML;
+  const deleteClassButton = () => {
+    button.classList.remove('button_loading');
+    button.innerHTML = value;
+  }
+  const addLoadingButton = () => {
+    button.innerHTML = `<img class="button__img" src="img/ellipse.svg" />`;
+    button.classList.add('button_loading');
+  }
+  addLoadingButton();
+  setTimeout(deleteClassButton, 9 * 1000);
+})
+
 
 setValues(priceAvtoInput, priceAvtoOutput);
 setValues(initialPaymentInput, initialPaymentOutput);

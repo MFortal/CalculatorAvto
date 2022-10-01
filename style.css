@@ -91,6 +91,10 @@ h1 {
 .button_loading {
   min-height: 48px;
   min-width: 103px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  pointer-events: none;
+  cursor: default;
 }
 
 .button__img {
