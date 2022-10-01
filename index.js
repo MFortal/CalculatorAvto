@@ -244,16 +244,33 @@ const sendJSON = () => {
   xhr.send(data);
 }
 
+// Отправка данных на сервер по клику на кнопку
 button.addEventListener("click", () => {
   sendJSON();
   const value = button.innerHTML;
+  const elements = document.querySelectorAll('.container__elem');
+  const ranges = document.querySelectorAll('.input-slider');
+
   const deleteClassButton = () => {
     button.classList.remove('button_loading');
     button.innerHTML = value;
+    for (el of elements) {
+      el.classList.remove('container__elem_disabled');
+    }
+    for (range of ranges) {
+      range.disabled = false;
+    }
   }
+
   const addLoadingButton = () => {
     button.innerHTML = `<img class="button__img" src="img/ellipse.svg" />`;
     button.classList.add('button_loading');
+    for (el of elements) {
+      el.classList.add('container__elem_disabled');
+    }
+    for (range of ranges) {
+      range.disabled = true;
+    }
   }
   addLoadingButton();
   setTimeout(deleteClassButton, 9 * 1000);

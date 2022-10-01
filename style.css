@@ -34,7 +34,6 @@
   --color-bg-orange: #ff9514;
   --color-bg-black: #111;
   --color-bg-grey: #575757;
-  --color-bg-dis: rgba(255, 149, 20, 0.4);
   --color-bg-track: #e1e1e1;
   --color-bg-output: #f3f3f4;
 }
@@ -73,11 +72,6 @@ h1 {
   background: var(--color-bg-grey);
 }
 
-.button:disabled {
-  background: var(--color-bg-dis);
-  cursor: none;
-}
-
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
@@ -94,7 +88,6 @@ h1 {
   padding-top: 10px;
   padding-bottom: 10px;
   pointer-events: none;
-  cursor: default;
 }
 
 .button__img {
@@ -244,8 +237,10 @@ h1 {
 }
 
 /* Стили active слайдера*/
-.container-slider_disabled {
+.container__elem_disabled {
   opacity: 0.4;
+  cursor: none;
+  pointer-events: none;
 }
 
 .container__elem {
