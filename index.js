@@ -81,7 +81,7 @@ const calculation = () => {
   leasingAmount.innerHTML = thousandSeparator(leasingSum) + ' ₽';
 }
 
-/* Установка событий в input */
+/* Установка событий в input при наборе текста*/
 const addEventInput = (item, output) => {
   setValues(item, output);
   item.addEventListener("input", () => {
@@ -125,11 +125,10 @@ const setSliderDisabled = (item) => {
   const slider = item.nextElementSibling;
   const sliderContainer = item.parentElement;
   if (slider.dataset.disabled) {
-    sliderContainer.classList.add("container-slider_disabled");
+    sliderContainer.classList.add("container__elem_disabled");
     item.disabled = "true";
   }
 }
-
 
 /* Если ткнули клавишей вне ввода */
 document.onclick = function (e) {
@@ -160,8 +159,13 @@ const setAddEventOutput = (input, output) => {
     output.value = current;
     let _this = input,
       min = parseInt(_this.min),
-      max = parseInt(_this.max),
-      percent = ((parseInt(output.value) - min) / (max - min)) * 100;
+      max = parseInt(_this.max);
+
+    if (output.dataset.persent) {
+      min *= priceAvtoInput.value;
+      max *= priceAvtoInput.value;
+    }
+    let percent = ((parseInt(output.value) - min) / (max - min)) * 100;
 
     if (percent > 100) {
       percent = 100;
@@ -173,7 +177,12 @@ const setAddEventOutput = (input, output) => {
       input.value = output.value;
     }
 
+    // if (input.contains("#price-avto")) {
+    //   console.log('dd');
+    // }
+    // если это тачка то посчитать ПВ
     moveSlider(input, percent);
+    //setValues(input, output);
   });
 
   output.addEventListener('keypress', function (e) {
