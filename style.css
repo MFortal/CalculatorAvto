@@ -43,19 +43,21 @@ html {
   font-family: "Nekst", "Arial", sans-serif;
 }
 
+h1 {
+  margin: 0;
+}
+
 .main {
-  margin: 113px 48px;
+  margin: 213px 48px;
 }
 
 /* Стили кнопок */
 .button {
-  font-family: "Gilroy", "Arial", sans-serif;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 30px;
+  line-height: 36px;
   height: 100%;
   color: var(--color-bg-white);
-  padding: 14px 0 18px 0;
+  padding: 8px 16px 12px;
   background: var(--color-bg-orange);
   border: none;
   border-radius: 40px;
@@ -99,7 +101,6 @@ html {
 }
 
 .container {
-  margin-top: 10vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -111,6 +112,8 @@ html {
   line-height: 90%;
   color: var(--color-bg-black);
   max-width: 50%;
+  margin-bottom: 32px;
+  margin-left: -1px;
 }
 
 .text {
@@ -242,7 +245,7 @@ html {
 }
 
 .container__elem {
-  width: 31.7%;
+  width: 31%;
 }
 
 .output__value {
@@ -250,4 +253,105 @@ html {
   background: transparent;
   border: none;
   outline: 0;
+}
+
+@media (max-width: 320px) {
+  .main {
+    margin: 44px 20px;
+  }
+
+  .header-h1 {
+    max-width: 100%;
+    margin-bottom: 32px;
+  }
+
+  .container__elem {
+    width: 100%;
+  }
+
+  .container-output {
+    width: 100%;
+  }
+  .button {
+    width: 100%;
+  }
+
+  .container {
+    justify-content: start;
+    row-gap: 16px;
+  }
+}
+
+@media (max-width: 679px) {
+  .header-h1 {
+    font-size: 34px;
+  }
+
+  .output__text {
+    font-size: 22px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  .button {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+  .main {
+    margin: 64px 36px;
+  }
+
+  .header-h1 {
+    max-width: 100%;
+    margin-bottom: 44px;
+  }
+
+  .container__elem {
+    width: 100%;
+  }
+
+  .container-output {
+    width: 47%;
+  }
+  .button {
+    width: 50%;
+  }
+
+  .container {
+    justify-content: start;
+    column-gap: 32px;
+    row-gap: 44px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main {
+    margin: 100px 48px;
+  }
+
+  .header-h1 {
+    max-width: 100%;
+    margin-bottom: 44px;
+  }
+
+  .container__elem {
+    width: 100%;
+  }
+
+  .container-output {
+    width: 48%;
+  }
+  .button {
+    width: 37%;
+  }
+
+  .container {
+    justify-content: start;
+    column-gap: 32px;
+    row-gap: 44px;
+  }
 }
