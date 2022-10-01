@@ -42,8 +42,10 @@ const moveSlider = (item, percent) => {
 
 /* Подчсет значений */
 const calculation = () => {
+
   //  ПЗ = Первоначальный взнос(в процентах) * Стоимость автомобиля = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value)
   initial = Math.round(initialPaymentInput.value / 100 * priceAvtoInput.value);
+  initialPaymentOutput.value = format(initial);
 
   /* Ежемесячный платеж 
   (Стоимость автомобиля  - Первоначальный взнос) * ((Процентная ставка * (1 + Процентная ставка) ^ Срок кредита в месяцах) / ((1 + Процентная ставка) ^ Срок кредита в месяцах - 1))
