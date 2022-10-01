@@ -210,9 +210,9 @@ h1 {
   gap: 5px;
 }
 
-.container-output__amount_symbol {
+/* .container-output__amount_symbol {
   margin-top: -5px;
-}
+} */
 .output__text {
   font-family: "Nekst";
   font-size: 54px;
