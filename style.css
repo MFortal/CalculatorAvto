@@ -287,9 +287,7 @@ h1 {
     justify-content: start;
     row-gap: 16px;
   }
-}
 
-@media (max-width: 679px) {
   .header-h1 {
     font-size: 34px;
   }
@@ -307,7 +305,36 @@ h1 {
   }
 }
 
-@media (min-width: 321px) and (max-width: 768px) {
+@media (min-width: 320px) and (max-width: 679px) {
+  .header-h1 {
+    font-size: 34px;
+  }
+
+  .output__text {
+    font-size: 32px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .button {
+    font-size: 22px;
+  }
+
+  .container__elem {
+    width: 100%;
+  }
+
+  .container-output {
+    width: 100%;
+  }
+  .button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 680px) and (max-width: 768px) {
   .main {
     margin: 64px 36px;
   }
@@ -350,10 +377,10 @@ h1 {
   }
 
   .container-output {
-    width: 48%;
+    width: 47%;
   }
   .button {
-    width: 37%;
+    width: 50%;
   }
 
   .container {
