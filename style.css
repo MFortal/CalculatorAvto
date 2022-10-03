@@ -292,6 +292,7 @@ h1 {
     font-size: 34px;
   }
 
+  .output,
   .output__text {
     font-size: 22px;
   }
